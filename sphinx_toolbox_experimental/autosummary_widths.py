@@ -35,6 +35,7 @@ Sphinx extension to allow customisation of column widths in autosummary tables w
 
 # stdlib
 from contextlib import suppress
+from fractions import Fraction
 from itertools import chain
 from typing import List, Tuple
 
@@ -42,6 +43,7 @@ from typing import List, Tuple
 from docutils import nodes
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
+from domdf_python_tools.utils import divide
 from sphinx import addnodes  # nodep
 from sphinx.application import Sphinx  # nodep
 from sphinx.config import Config  # nodep
@@ -123,14 +125,20 @@ class WidthsDirective(SphinxDirective):
 	for the remainder of the document, or until the next `autosummary-widths` directive.
 	"""  # noqa: D400
 
-	required_arguments = 2
+	required_arguments = 1
 
 	def run(self) -> List:
 		"""
 		Process the directive's arguments.
 		"""
 
-		widths = [arg.split('/') for arg in self.arguments]
+		widths = [tuple(map(int, divide(arg, '/'))) for arg in self.arguments]
+
+		if len(widths) == 1:
+			left_width = Fraction(*widths[0])
+			right_width = 1 - left_width
+			widths.append((right_width.numerator, right_width.denominator))
+
 		self.state.document.autosummary_widths = widths
 		return []
 
