@@ -1,0 +1,43 @@
+# Configuration for 'repo_helper' (https://github.com/repo-helper/repo_helper)
+---
+modname: 'sphinx-toolbox-experimental'
+copyright_years: '2021'
+author: 'Dominic Davis-Foster'
+email: 'dominic@davis-foster.co.uk'
+username: 'sphinx-toolbox'
+assignee: 'domdfcoding'
+version: '0.0.0'
+license: 'BSD'
+short_desc: 'Experimental Sphinx Extensions.'
+
+use_whey: true
+enable_conda: false
+enable_tests: false
+enable_docs: false
+on_pypi: false
+
+python_versions:
+  - 3.6
+  - 3.7
+  - 3.8
+  - 3.9
+
+keywords:
+  - sphinx
+  - documentation
+  - sphinx-extension
+
+third_party_version_matrix:
+  sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+
+classifiers:
+ - 'Development Status :: 3 - Alpha'
+ - "Framework :: Sphinx :: Extension"
+ - 'Intended Audience :: Developers'
+ - "Topic :: Documentation"
+ - 'Topic :: Documentation :: Sphinx'
+ - 'Topic :: Software Development :: Documentation'
+ - "Topic :: Utilities"
