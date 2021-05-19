@@ -76,10 +76,8 @@ class AutosummaryWidths(Autosummary):
 		widths = tuple(chain.from_iterable(getattr(self.state.document, "autosummary_widths", ((1, 2), (1, 2)))))
 		assert len(widths) == 4
 
-		html_widths = tuple(
-				chain.from_iterable(getattr(self.state.document, "autosummary_html_widths", ((1, 2), (1, 2))))
-				)
-		assert len(html_widths) == 4
+		html_widths = getattr(self.state.document, "autosummary_html_widths", ((1, 10), (9, 10)))
+		assert len(html_widths) == 2
 
 		table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
 
