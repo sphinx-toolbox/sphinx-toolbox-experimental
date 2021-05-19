@@ -45,4 +45,8 @@ license-key = "BSD-3-Clause"
 package = "sphinx_toolbox_experimental"
 
 [tool.importcheck]
-always = [ "sphinx_toolbox_experimental.html_section", "sphinx_toolbox_experimental.autosummary_widths", "sphinx_toolbox_experimental.succinct_seealso",]
+always = [
+    "sphinx_toolbox_experimental.html_section",
+    "sphinx_toolbox_experimental.autosummary_widths",
+    "sphinx_toolbox_experimental.succinct_seealso",
+]
