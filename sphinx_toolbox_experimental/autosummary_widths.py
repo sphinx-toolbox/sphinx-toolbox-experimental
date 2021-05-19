@@ -37,10 +37,11 @@ Sphinx extension to allow customisation of column widths in autosummary tables w
 from contextlib import suppress
 from fractions import Fraction
 from itertools import chain
-from typing import List, Tuple
+from typing import Iterable, List, Tuple
 
 # 3rd party
 from docutils import nodes
+from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
 from domdf_python_tools.utils import divide
@@ -74,6 +75,12 @@ class AutosummaryWidths(Autosummary):
 
 		widths = tuple(chain.from_iterable(getattr(self.state.document, "autosummary_widths", ((1, 2), (1, 2)))))
 		assert len(widths) == 4
+
+		html_widths = tuple(
+				chain.from_iterable(getattr(self.state.document, "autosummary_html_widths", ((1, 2), (1, 2))))
+				)
+		assert len(html_widths) == 4
+
 		table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
 
 		table = autosummary_table('')
@@ -82,8 +89,8 @@ class AutosummaryWidths(Autosummary):
 
 		group = nodes.tgroup('', cols=2)
 		real_table.append(group)
-		group.append(nodes.colspec('', colwidth=10))
-		group.append(nodes.colspec('', colwidth=90))
+		group.append(nodes.colspec('', colwidth=html_widths[0][0] * 100 / html_widths[0][1]))
+		group.append(nodes.colspec('', colwidth=html_widths[1][0] * 100 / html_widths[1][1]))
 
 		body = nodes.tbody('')
 		group.append(body)
@@ -126,20 +133,32 @@ class WidthsDirective(SphinxDirective):
 	"""  # noqa: D400
 
 	required_arguments = 1
+	optional_arguments = 1
+	option_spec = {"html": directives.unchanged_required}
 
-	def run(self) -> List:
-		"""
-		Process the directive's arguments.
-		"""
-
-		widths = [tuple(map(int, divide(arg, '/'))) for arg in self.arguments]
+	@staticmethod
+	def parse_widths(raw_widths: Iterable[str]):
+		widths = [tuple(map(int, divide(arg, '/'))) for arg in raw_widths]
 
 		if len(widths) == 1:
 			left_width = Fraction(*widths[0])
 			right_width = 1 - left_width
 			widths.append((right_width.numerator, right_width.denominator))
 
-		self.state.document.autosummary_widths = widths
+		return widths
+
+	def run(self) -> List:
+		"""
+		Process the directive's arguments.
+		"""
+
+		self.state.document.autosummary_widths = self.parse_widths(self.arguments)
+
+		if "html" in self.options:
+			self.state.document.autosummary_html_widths = self.parse_widths(self.options["html"])
+		else:
+			self.state.document.autosummary_html_widths = [(1, 10), (9, 10)]
+
 		return []
 
 
