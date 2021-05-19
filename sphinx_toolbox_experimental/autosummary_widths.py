@@ -34,6 +34,7 @@ Sphinx extension to allow customisation of column widths in autosummary tables w
 #
 
 # stdlib
+from contextlib import suppress
 from itertools import chain
 from typing import List, Tuple
 
@@ -69,44 +70,49 @@ class AutosummaryWidths(Autosummary):
 		# table_spec['spec'] = r'\Xx{3}{8}\Xx{5}{8}'
 		# table_spec['spec'] = r'\Xx{7}{16}\Xx{9}{16}'
 
-		widths = chain.from_iterable(getattr(self.state.document, "autosummary_widths", ((1, 2), (1, 2))))
-		table_spec["spec"] = r'\Xx{{{}}}{{{}}}\Xx{{{}}}{{{}}}'.format(*widths)
+		widths = tuple(chain.from_iterable(getattr(self.state.document, "autosummary_widths", ((1, 2), (1, 2)))))
+		assert len(widths) == 4
+		table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
 
 		table = autosummary_table('')
 		real_table = nodes.table('', classes=["longtable"])
 		table.append(real_table)
+
 		group = nodes.tgroup('', cols=2)
 		real_table.append(group)
 		group.append(nodes.colspec('', colwidth=10))
 		group.append(nodes.colspec('', colwidth=90))
+
 		body = nodes.tbody('')
 		group.append(body)
 
 		def append_row(*column_texts: str) -> None:
 			row = nodes.row('')
 			source, line = self.state_machine.get_source_and_line()
+
 			for text in column_texts:
 				node = nodes.paragraph('')
 				vl = StringList()
-				vl.append(text, "%s:%d:<autosummary>" % (source, line))
+				vl.append(text, f"{source}:{line:d}:<autosummary>")
+
 				with switch_source_input(self.state, vl):
 					self.state.nested_parse(vl, 0, node)
-					try:
+
+					with suppress(IndexError):
 						if isinstance(node[0], nodes.paragraph):
 							node = node[0]
-					except IndexError:
-						pass
+
 					row.append(nodes.entry('', node))
+
 			body.append(row)
 
 		for name, sig, summary, real_name in items:
-			qualifier = "obj"
+			col1 = f":obj:`{name} <{real_name}>`"
+
 			if "nosignatures" not in self.options:
-				col1 = ":{}:`{} <{}>`\\ {}".format(qualifier, name, real_name, rst.escape(sig).replace('(', "(​"))
-			else:
-				col1 = f":{qualifier}:`{name} <{real_name}>`"
-			col2 = summary
-			append_row(col1, col2)
+				col1 += f"\\ {rst.escape(sig).replace('(', '(​')}"
+
+			append_row(col1, summary)
 
 		return [table_spec, table]
 
