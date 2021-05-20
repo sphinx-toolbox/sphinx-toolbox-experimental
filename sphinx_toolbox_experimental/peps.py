@@ -127,6 +127,16 @@ class PEP621Section(PEP):
 			self.title = unescape(text)
 			self.target = f"621#{unescape(text)}"
 
+		if self.target in {
+				f"621#dependencies",
+				f"621#optional-dependencies",
+				f"621#dependencies/optional-dependencies",
+				}:
+			self.target = f"621#dependencies-optional-dependencies"
+
+		elif self.target in {f"621#authors", f"621#maintainers", f"621#authors/maintainers"}:
+			self.target = f"621#authors-maintainers"
+
 		return SphinxRole.__call__(self, name, rawtext, text, lineno, inliner, options, content)
 
 
