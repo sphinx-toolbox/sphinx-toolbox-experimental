@@ -150,12 +150,13 @@ class WidthsDirective(SphinxDirective):
 		Process the directive's arguments.
 		"""
 
-		self.state.document.autosummary_widths = self.parse_widths(self.arguments)
-
 		if "html" in self.options:
-			self.state.document.autosummary_html_widths = self.parse_widths(re.split(r"\s+", self.options["html"]))
+			html_widths = self.parse_widths(re.split(r"\s+", self.options["html"]))
 		else:
-			self.state.document.autosummary_html_widths = [(1, 10), (9, 10)]
+			html_widths = [(1, 10), (9, 10)]
+
+		self.state.document.autosummary_widths = self.parse_widths(self.arguments)  # type: ignore
+		self.state.document.autosummary_html_widths = html_widths  # type: ignore
 
 		return []
 
