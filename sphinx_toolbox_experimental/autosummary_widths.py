@@ -38,13 +38,15 @@ import re
 from contextlib import suppress
 from fractions import Fraction
 from itertools import chain
-from typing import Iterable, List, Tuple
+from typing import Iterable, List, Optional, Tuple, cast
 
 # 3rd party
+import dict2css  # nodep
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
+from domdf_python_tools.paths import PathPlus
 from sphinx import addnodes  # nodep
 from sphinx.application import Sphinx  # nodep
 from sphinx.config import Config  # nodep
@@ -82,7 +84,7 @@ class AutosummaryWidths(Autosummary):
 		table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
 
 		table = autosummary_table('')
-		real_table = nodes.table('', classes=["longtable"])
+		real_table = nodes.table('', classes=["longtable", "autosummary"])
 		table.append(real_table)
 
 		group = nodes.tgroup('', cols=2)
@@ -135,8 +137,14 @@ class WidthsDirective(SphinxDirective):
 	option_spec = {"html": directives.unchanged_required}
 
 	@staticmethod
-	def parse_widths(raw_widths: Iterable[str]):
-		widths = [tuple(map(int, arg.split('/'))) for arg in raw_widths]
+	def parse_widths(raw_widths: Iterable[str]) -> List[Tuple[int, int]]:
+		"""
+		Parse a width string (as a vulgar fraction) into a list of 2-element ``(numerator, denominator)`` tuples.
+
+		:param raw_widths:
+		"""
+
+		widths = [cast(Tuple[int, int], tuple(map(int, arg.split('/')))) for arg in raw_widths]
 
 		if len(widths) == 1:
 			left_width = Fraction(*widths[0])
@@ -183,6 +191,29 @@ def configure(app: Sphinx, config: Config):
 	config.latex_elements = latex_elements  # type: ignore
 
 
+def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
+	"""
+	Copy the custom CSS file.
+
+	:param app: The Sphinx application.
+	:param exception: Any exception which occurred and caused Sphinx to abort.
+	"""
+
+	if exception:  # pragma: no cover
+		return
+
+	if app.builder.name.lower() != "html":
+		return
+
+	css_static_dir = PathPlus(app.outdir) / "_static" / "css"
+	css_static_dir.maybe_make(parents=True)
+
+	dict2css.dump(
+			{".longtable.autosummary": {"width": "100%"}},
+			css_static_dir / "autosummary-widths.css",
+			)
+
+
 def setup(app: Sphinx):
 	"""
 	Setup :mod:`sphinx_toolbox_experimental.autosummary_widths`.
@@ -193,4 +224,6 @@ def setup(app: Sphinx):
 	app.add_directive("autosummary", AutosummaryWidths, override=True)
 	app.add_directive("autosummary-widths", WidthsDirective)
 	app.connect("build-finished", latex.replace_unknown_unicode)
+	app.connect("build-finished", copy_asset_files)
 	app.connect("config-inited", configure)
+	app.add_css_file("css/autosummary-widths.css")

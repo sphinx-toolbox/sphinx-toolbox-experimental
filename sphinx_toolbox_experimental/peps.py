@@ -60,6 +60,10 @@ class PEP(ReferenceRole):
 	has_explicit_title: Optional[bool]
 
 	def run(self) -> Tuple[List[Node], List[system_message]]:
+		"""
+		Process the role.
+		"""
+
 		target_id = "index-%s" % self.env.new_serialno("index")
 		entries = [("single", _("Python Enhancement Proposals; PEP %s") % self.target, target_id, '', None)]
 
@@ -87,16 +91,20 @@ class PEP(ReferenceRole):
 		return [index, target, reference], []
 
 	def build_uri(self) -> str:
+		"""
+		Constrict the target URI for the reference node.
+		"""
+
 		assert self.target is not None
 		assert self.inliner is not None
 
-		base_url = self.inliner.document.settings.pep_base_url
+		base_url: str = self.inliner.document.settings.pep_base_url
 		ret = self.target.split('#', 1)
 
 		if len(ret) == 2:
-			return base_url + f"pep-{int(ret[0]):04d}#{ret[1]}"
+			return f"{base_url}pep-{int(ret[0]):04d}#{ret[1]}"
 		else:
-			return base_url + f"pep-{int(ret[0]):04d}"
+			return f"{base_url}pep-{int(ret[0]):04d}"
 
 
 class PEP621Section(PEP):
