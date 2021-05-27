@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "whey"
 requires = [ "whey",]
+build-backend = "whey"
 
 [project]
 name = "sphinx-toolbox-experimental"
