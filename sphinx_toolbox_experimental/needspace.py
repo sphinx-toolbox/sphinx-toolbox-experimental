@@ -51,7 +51,7 @@ def visit_desc(translator: LaTeXTranslator, node: addnodes.desc) -> None:
 
 	translator.body.append(r"\needspace{5\baselineskip}")
 
-	if "toctree_plus" in translator.config.extensions:
+	if "sphinxcontrib.toctree_plus" in translator.config.extensions:
 		# 3rd party
 		from sphinxcontrib import toctree_plus  # nodep
 
