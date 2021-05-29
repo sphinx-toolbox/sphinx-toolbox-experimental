@@ -36,6 +36,7 @@ Also adds the ``pep621`` role for referencing sections within :pep:`621`.
 #
 
 # stdlib
+import re
 from typing import Dict, List, Optional, Tuple
 
 # 3rd party
@@ -148,6 +149,52 @@ class PEP621Section(PEP):
 		return SphinxRole.__call__(self, name, rawtext, text, lineno, inliner, options, content)
 
 
+class CoreMetadata(ReferenceRole):
+	"""
+	Sphinx role for referencing a `core metadata`_ field.
+
+	.. core metadata: https://packaging.python.org/specifications/core-metadata/
+	"""
+
+	title: Optional[str]
+	target: Optional[str]
+	has_explicit_title: Optional[bool]
+
+	def run(self) -> Tuple[List[Node], List[system_message]]:
+		"""
+		Process the role.
+		"""
+
+		target_id = f"index-{self.env.new_serialno('index')}"
+		entries = [("single", _("Core Metadata Field %s") % self.target, target_id, '', None)]
+
+		assert self.title is not None
+		assert self.target is not None
+		assert self.inliner is not None
+
+		index = addnodes.index(entries=entries)
+		target = nodes.target('', '', ids=[target_id])
+		self.inliner.document.note_explicit_target(target)
+
+		refuri = self.build_uri()
+		reference = nodes.reference('', '', internal=False, refuri=refuri, classes=["pep"])
+		reference += nodes.inline(self.title, self.title)
+
+		return [index, target, reference], []
+
+	def build_uri(self) -> str:
+		"""
+		Constrict the target URI for the reference node.
+		"""
+
+		assert self.target is not None
+		assert self.inliner is not None
+
+		base_url: str = "https://packaging.python.org/specifications/core-metadata/"
+		target = re.sub(r"[\W]+", '-', self.target.lower()).strip('-')
+		return f"{base_url}#{target}"
+
+
 def setup(app: Sphinx):
 	"""
 	Setup :mod:`sphinx_toolbox_experimental.peps`.
@@ -160,3 +207,4 @@ def setup(app: Sphinx):
 
 	roles.register_local_role("pep", PEP())
 	roles.register_local_role("pep621", PEP621Section())
+	roles.register_local_role("core-meta", CoreMetadata())
