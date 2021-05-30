@@ -50,15 +50,16 @@ from domdf_python_tools.paths import PathPlus
 from sphinx import addnodes  # nodep
 from sphinx.application import Sphinx  # nodep
 from sphinx.config import Config  # nodep
-from sphinx.ext.autosummary import Autosummary, autosummary_table  # nodep
+from sphinx.ext.autosummary import autosummary_table  # nodep
 from sphinx.util import rst  # nodep
 from sphinx.util.docutils import SphinxDirective, switch_source_input  # nodep
 from sphinx_toolbox import latex
+from sphinx_toolbox.more_autosummary import PatchedAutosummary
 
 __all__ = ["AutosummaryWidths", "WidthsDirective", "configure", "setup"]
 
 
-class AutosummaryWidths(Autosummary):
+class AutosummaryWidths(PatchedAutosummary):
 	"""
 	Customised :rst:dir:`autosummary` directive with customisable width with the LaTeX builder.
 	"""
