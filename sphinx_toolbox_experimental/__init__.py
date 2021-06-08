@@ -52,5 +52,6 @@ def setup(app: Sphinx):
 
 	app.setup_extension("sphinx_toolbox_experimental.html_section")
 	app.setup_extension("sphinx_toolbox_experimental.rst_field")
+	app.setup_extension("sphinx_toolbox_experimental.toml")
 
 	return {"version": __version__}
