@@ -49,7 +49,8 @@ def visit_desc(translator: LaTeXTranslator, node: addnodes.desc) -> None:
 	:param node:
 	"""
 
-	translator.body.append(r"\needspace{5\baselineskip}")
+	needspace_amount = getattr(translator.config, "needspace_amount", r"5\baselineskip")
+	translator.body.append(fr"\needspace{{{needspace_amount}}}")
 
 	if "sphinxcontrib.toctree_plus" in translator.config.extensions:
 		# 3rd party
@@ -86,5 +87,6 @@ def setup(app: Sphinx):
 
 	app.connect("config-inited", configure)
 	app.add_node(addnodes.desc, latex=(visit_desc, LaTeXTranslator.depart_desc), override=True)
+	app.add_config_value("needspace_amount", default=r"5\baselineskip", rebuild="latex", types=["str"])
 
 	return {"parallel_read_safe": True}
