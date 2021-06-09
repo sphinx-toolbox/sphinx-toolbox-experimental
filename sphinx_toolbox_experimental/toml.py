@@ -62,22 +62,33 @@ class TOML(ReferenceRole):
 		Process the role.
 		"""
 
-		target_id = f"index-{self.env.new_serialno('index')}"
-		entries = [("single", _("TOML: %s") % self.target, target_id, '', None)]
-
 		assert self.title is not None
 		assert self.target is not None
 		assert self.inliner is not None
 
-		index = addnodes.index(entries=entries)
-		target = nodes.target('', '', ids=[target_id])
-		self.inliner.document.note_explicit_target(target)
+		if self.target.startswith('!'):
+			xref = False
+			self.target.lstrip('!')
+		else:
+			xref = True
+
+		node_list = []
+
+		if xref:
+			target_id = f"index-{self.env.new_serialno('index')}"
+			entries = [("single", _("TOML: %s") % self.target, target_id, '', None)]
+
+			index = addnodes.index(entries=entries)
+			target = nodes.target('', '', ids=[target_id])
+			node_list.extend((index, target))
+			self.inliner.document.note_explicit_target(target)
 
 		refuri = self.build_uri()
 		reference = nodes.reference('', '', internal=False, refuri=refuri, classes=["toml-xref"])
 		reference += nodes.inline(self.title, self.title)
+		node_list.append(reference)
 
-		return [index, target, reference], []
+		return node_list, []
 
 	def build_uri(self) -> str:
 		"""
