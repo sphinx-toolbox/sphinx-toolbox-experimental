@@ -68,7 +68,7 @@ class TOML(ReferenceRole):
 
 		if self.target.startswith('!'):
 			xref = False
-			self.target.lstrip('!')
+			self.target = self.target.lstrip('!')
 		else:
 			xref = True
 

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 #
-#  pep_section.py
+#  peps.py
 """
 Sphinx extension which modifies the :rst:role:`pep` role to use normal (i.e. not bold) text for custom titles.
 
-Also adds the ``pep621`` role for referencing sections within :pep:`621`.
+Also adds the ``pep621`` role for referencing sections within :pep:`621`,
+and the ``core-meta`` role for referencing sections in Python's core metadata`.
 """
 # Based on https://github.com/sphinx-doc/sphinx/blob/3.x/sphinx/roles.py
 #
@@ -48,7 +49,7 @@ from sphinx.application import Sphinx  # nodep
 from sphinx.locale import _  # nodep
 from sphinx.util.docutils import ReferenceRole, SphinxRole  # nodep
 
-__all__ = ["PEP", "PEP621Section", "setup"]
+__all__ = ["PEP", "PEP621Section", "CoreMetadata", "setup"]
 
 
 class PEP(ReferenceRole):
