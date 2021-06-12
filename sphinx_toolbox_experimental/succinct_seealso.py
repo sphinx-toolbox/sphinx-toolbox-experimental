@@ -48,8 +48,12 @@ def visit_seealso(translator: LaTeXTranslator, node: addnodes.seealso) -> None:
 	:param node:
 	"""
 
-	# 	translator.body.append('\n\n\\begin{description}\\item[{%s:}] \\leavevmode' % admonitionlabels['seealso'])
-	translator.body.append('\n\n\\sphinxstrong{%s:} ' % admonitionlabels["seealso"])
+	# translator.body.append('\n\n\\begin{description}\\item[{%s:}] \\leavevmode' % admonitionlabels['seealso'])
+	# translator.body.append('\n\n\\sphinxstrong{%s:} ' % admonitionlabels["seealso"])
+	if len(node) > 1:
+		LaTeXTranslator.visit_seealso(translator, node)
+	else:
+		translator.body.append('\n\n\\sphinxstrong{%s:} ' % admonitionlabels["seealso"])
 
 
 def depart_seealso(translator: LaTeXTranslator, node: addnodes.seealso) -> None:
