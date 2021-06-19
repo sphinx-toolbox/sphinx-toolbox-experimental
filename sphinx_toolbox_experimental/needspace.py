@@ -2,7 +2,7 @@
 #
 #  needspace.py
 """
-Sphinx extension which configues the LaTeX ``needspace`` package.
+Sphinx extension which configures the LaTeX ``needspace`` package.
 """
 #
 # Copyright (c) 2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>

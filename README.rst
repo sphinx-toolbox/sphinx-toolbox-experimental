@@ -72,6 +72,7 @@ sphinx_toolbox_experimental
 
 .. end shields
 
+
 Installation
 --------------
 
@@ -86,6 +87,12 @@ To install with ``pip``:
 	$ python -m pip install git+https://github.com/sphinx-toolbox/sphinx-toolbox-experimental
 
 .. end installation
+
+
+sphinx_toolbox_experimental.autosummary_widths
+-------------------------------------------------
+
+Sphinx extension to allow customisation of column widths in autosummary tables with the LaTeX builder.
 
 
 sphinx_toolbox_experimental.html_section
@@ -108,13 +115,44 @@ However, the section content will still be visible.
 Consider using Sphinx's ``.. only:: html`` directive for that.
 
 
-sphinx_toolbox_experimental.autosummary_widths
+sphinx_toolbox_experimental.missing_xref
 -------------------------------------------------
 
-Sphinx extension to allow customisation of column widths in autosummary tables with the LaTeX builder.
+Sphinx extension which ignores warnings about certain XRefs being unresolved.
+The warnings to ignore are determined by a list of patterns (for :func:`re.match`) defined in the ``ignore_missing_xrefs`` option in ``conf.py``.
+
+
+sphinx_toolbox_experimental.needspace
+-------------------------------------------------
+
+Sphinx extension which configures the LaTeX ``needspace`` package.
+The default is to add ``\needspace{5\baselineskip}`` before each ``addnodes.desc`` node (i.e. a function or class description).
+The space can be adjusted with the ``needspace_amount`` option in ``conf.py``.
+
+
+sphinx_toolbox_experimental.peps
+-------------------------------------------------
+
+Sphinx extension which modifies the ``pep`` role to use normal (i.e. not bold) text for custom titles.
+
+Also adds the ``pep621`` role for referencing sections within PEP 621,
+and the ``core-meta`` role for referencing sections in Python's core metadata`.
+
+
+sphinx_toolbox_experimental.rst_field
+-------------------------------------------------
+
+Sphinx extension to add a ``field`` directive to the ``rst`` domain for documenting a reST directive field..
 
 
 sphinx_toolbox_experimental.succinct_seealso
 -------------------------------------------------
 
 Sphinx extension which customises ``seealso`` directives to be on one line with the LaTeX builder.
+
+sphinx_toolbox_experimental.toml
+-------------------------------------------------
+
+Sphinx extension which adds the ``toml`` role for referencing sections of the TOML specification.
+
+The TOML version can be set with the ``toml_spec_version`` option in ``conf.py``.
