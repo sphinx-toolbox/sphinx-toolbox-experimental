@@ -72,7 +72,7 @@ class TOML(ReferenceRole):
 		else:
 			xref = True
 
-		node_list = []
+		node_list: List[nodes.Node] = []
 
 		if xref:
 			target_id = f"index-{self.env.new_serialno('index')}"

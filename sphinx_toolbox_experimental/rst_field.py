@@ -34,7 +34,7 @@ Sphinx extension to add a ``field`` directive to the ``rst`` domain for document
 
 # stdlib
 import re
-from typing import Any, Dict, cast
+from typing import Any, Dict, Optional, cast
 
 # 3rd party
 from sphinx import addnodes  # nodep
@@ -54,6 +54,9 @@ class ReSTField(ReSTMarkup):
 	"""
 
 	def handle_signature(self, sig: str, signode: addnodes.desc_signature) -> str:
+		name: str
+		argument: Optional[str]
+
 		try:
 			name, argument = re.split(r'\s*:\s+', sig.strip(), 1)
 		except ValueError:

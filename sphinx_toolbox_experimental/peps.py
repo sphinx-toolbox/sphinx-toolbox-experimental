@@ -114,16 +114,16 @@ class PEP621Section(PEP):
 	Sphinx role for referencing a section within :pep:`621`.
 	"""
 
-	def __call__(
-			self,
-			name: str,
-			rawtext: str,
-			text: str,
-			lineno: int,
-			inliner: Inliner,
-			options: Dict = {},
-			content: List[str] = []
-			) -> Tuple[List[Node], List[system_message]]:
+	def __call__(  # noqa: 117
+		self,
+		name: str,
+		rawtext: str,
+		text: str,
+		lineno: int,
+		inliner: Inliner,
+		options: Dict = {},
+		content: List[str] = []
+		) -> Tuple[List[Node], List[system_message]]:
 		# if the first character is a bang, don't cross-reference at all
 		self.disabled = text.startswith('!')
 
@@ -154,7 +154,7 @@ class CoreMetadata(ReferenceRole):
 	"""
 	Sphinx role for referencing a `core metadata`_ field.
 
-	.. core metadata: https://packaging.python.org/specifications/core-metadata/
+	.. _core metadata: https://packaging.python.org/specifications/core-metadata/
 	"""
 
 	title: Optional[str]
