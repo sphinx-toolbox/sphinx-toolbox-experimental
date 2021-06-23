@@ -48,7 +48,6 @@ from sphinx import addnodes
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 from sphinx_toolbox.changeset import VersionChange
-from sphinx_toolbox.installation import installation_node_purger
 from sphinx_toolbox.utils import Purger
 
 __all__ = ["Change", "Changelog", "builder_init", "setup"]
@@ -145,7 +144,7 @@ class Changelog(SphinxDirective):
 			sub_section_node = nodes.section()
 			sub_section_node += nodes.title()
 			ret.append(sub_section_node)
-			installation_node_purger.add_node(self.env, sub_section_node, sub_section_node, self.lineno)
+			changelog_node_purger.add_node(self.env, sub_section_node, sub_section_node, self.lineno)
 
 			module_name_node = nodes.paragraph(full_module_name, full_module_name)
 			self.state.nested_parse(StringList([full_module_name]), self.content_offset, module_name_node)
@@ -167,7 +166,7 @@ class Changelog(SphinxDirective):
 			name = fully_normalize_name(sub_section_text)
 			sub_section_node["names"].append(name)
 			self.state.document.note_implicit_target(sub_section_node, sub_section_node)
-			installation_node_purger.add_node(self.env, sub_section_node, sub_section_node, self.lineno)
+			changelog_node_purger.add_node(self.env, sub_section_node, sub_section_node, self.lineno)
 
 			content = stringlist.StringList()
 			content_node = nodes.paragraph()
@@ -238,7 +237,7 @@ class Changelog(SphinxDirective):
 # 				self.state.nested_parse(StringList(body), self.content_offset, content_node)
 # 				sub_section_node += content_node
 #
-# 			installation_node_purger.add_node(self.env, section_node, section_node, self.lineno)
+# 			changelog_node_purger.add_node(self.env, section_node, section_node, self.lineno)
 #
 # 		return ret
 
