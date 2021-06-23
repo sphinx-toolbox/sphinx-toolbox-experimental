@@ -49,6 +49,15 @@ def handle_missing_xref(
 		node: nodes.Node,
 		contnode: nodes.Node,
 		) -> None:
+	"""
+	Skip warnings for unresolved cross references if the target matches one of the given patterns.
+
+	:param app: The Sphinx application.
+	:param env: The Sphinx build environment.
+	:param node: The cross reference node which cannot be resolved.
+	:param contnode:
+	:return:
+	"""
 
 	if not isinstance(node, nodes.Element):
 		return
