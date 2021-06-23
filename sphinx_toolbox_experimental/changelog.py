@@ -111,6 +111,8 @@ class Change(VersionChange):
 		elif self.name == "versionchanged":
 			self.add_changelog_entry("change")
 
+		changelog_node_purger.add_node(self.env, ret[0], ret[0], self.lineno)
+
 		return ret
 
 
