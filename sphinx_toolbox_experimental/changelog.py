@@ -267,6 +267,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	"""
 
 	app.connect("builder-inited", builder_init)
+	app.connect("env-get-outdated", changelog_node_purger.get_outdated_docnames)
+
 	app.add_directive("versionadded", Change, override=True)
 	app.add_directive("versionchanged", Change, override=True)
 	app.add_directive("changelog", Changelog)
