@@ -95,6 +95,14 @@ sphinx_toolbox_experimental.autosummary_widths
 Sphinx extension to allow customisation of column widths in autosummary tables with the LaTeX builder.
 
 
+sphinx_toolbox_experimental.changelog
+-------------------------------------------------
+
+Sphinx extension which generates a changelog from ``versionadded`` and ``versionchanged`` directives.
+
+The changelog can be added with the ``changelog`` directive. The directive takes a single argument, the version number to display the changelog for.
+
+
 sphinx_toolbox_experimental.html_section
 -----------------------------------------
 
