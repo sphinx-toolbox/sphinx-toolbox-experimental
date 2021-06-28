@@ -59,7 +59,7 @@ def copy_asset_files(app: Sphinx, exception: Exception = None):
 
 	css_static_dir = PathPlus(app.outdir) / "_static" / "css"
 	css_static_dir.maybe_make(parents=True)
-	(css_static_dir / "sphinx-toolbox.css").write_text(
+	(css_static_dir / "download-icon.css").write_text(
 			"""
 /*  Font Awesome 4.7.0 by @davegandy - https://fontawesome.io - @fontawesome
  *  License - https://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
