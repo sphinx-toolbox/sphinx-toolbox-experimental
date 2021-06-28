@@ -41,3 +41,6 @@ classifiers:
  - 'Topic :: Documentation :: Sphinx'
  - 'Topic :: Software Development :: Documentation'
  - "Topic :: Utilities"
+
+manifest_additional:
+ - "recursive-include sphinx_toolbox_experimental/fonts *"
