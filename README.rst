@@ -127,7 +127,7 @@ sphinx_toolbox_experimental.missing_xref
 -------------------------------------------------
 
 Sphinx extension which ignores warnings about certain XRefs being unresolved.
-The warnings to ignore are determined by a list of patterns (for :func:`re.match`) defined in the ``ignore_missing_xrefs`` option in ``conf.py``.
+The warnings to ignore are determined by a list of patterns (for ``re.match``) defined in the ``ignore_missing_xrefs`` option in ``conf.py``.
 
 
 sphinx_toolbox_experimental.needspace
