@@ -341,7 +341,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	app.add_directive("versionchanged", Change, override=True)
 	app.add_directive("changelog", Changelog)
 
-	app.add_node(nodes.title, latex=(visit_title, LaTeXTranslator.depart_title))
+	app.add_transform(ChangelogSectionTransform)
+	app.add_node(nodes.title, latex=(visit_title, LaTeXTranslator.depart_title), override=True)
 	app.add_config_value("changelog_sections_numbered", True, "env", [bool])
 
 	return {"parallel_read_safe": True}
