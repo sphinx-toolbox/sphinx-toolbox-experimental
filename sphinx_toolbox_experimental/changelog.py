@@ -33,6 +33,7 @@ Sphinx extension which generates a changelog from ``versionadded`` and ``version
 
 # stdlib
 import itertools
+import re
 from collections import defaultdict
 from functools import partial
 from operator import itemgetter
@@ -44,9 +45,12 @@ from docutils.nodes import Node, fully_normalize_name
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
 from first import first
-from sphinx import addnodes
-from sphinx.application import Sphinx
-from sphinx.util.docutils import SphinxDirective
+from sphinx import addnodes  # nodep
+from sphinx.application import Sphinx  # nodep
+from sphinx.transforms import SphinxTransform  # nodep
+from sphinx.util.docutils import SphinxDirective  # nodep
+from sphinx.util.nodes import clean_astext  # nodep
+from sphinx.writers.latex import LaTeXTranslator  # nodep
 from sphinx_toolbox.changeset import VersionChange
 from sphinx_toolbox.utils import Purger
 
@@ -199,6 +203,69 @@ class Changelog(SphinxDirective):
 		return ret
 
 
+def visit_title(translator: LaTeXTranslator, node: nodes.title) -> None:
+	parent = node.parent
+
+	if getattr(translator.config, "changelog_sections_numbered", True):
+		return LaTeXTranslator.visit_title(translator, node)
+
+	if "changelog" not in parent.attributes["classes"]:
+		return LaTeXTranslator.visit_title(translator, node)
+
+	if isinstance(parent, addnodes.seealso):
+		# the environment already handles this
+		raise nodes.SkipNode
+	elif isinstance(parent, nodes.section):
+		if translator.this_is_the_title:
+			return LaTeXTranslator.visit_title(translator, node)
+		else:
+			short = ''
+			if node.traverse(nodes.image):
+				short = f'[{translator.escape(" ".join(clean_astext(node).split()))}]'
+
+			sectionlevel = translator.sectionnames[translator.sectionlevel]
+			translator.body.append(r"\phantomsection\stepcounter{section}")
+			translator.body.append(
+					fr"\addcontentsline{{toc}}{{{sectionlevel}}}{{\protect\numberline{{\the{sectionlevel}}}{{{node.astext()}}}}}"
+					)
+			translator.body.append(fr'\{sectionlevel}{short}*{{')
+			translator.context.append('}\n' + translator.hypertarget_to(node.parent))
+	else:
+		return LaTeXTranslator.visit_title(translator, node)
+
+	translator.in_title = 1
+	return None
+
+
+_make_id = nodes.make_id
+
+
+def make_id(string):
+	if re.match(r"\d.\d.\d", string):
+		return string  # .replace(".", "-")
+	else:
+		return _make_id(string)
+
+
+nodes.make_id = make_id
+
+
+class ChangelogSectionTransform(SphinxTransform):
+	default_priority = 500
+
+	def apply(self, **kwargs) -> None:
+
+		if self.env.docname != "changelog":
+			return
+
+		for node in self.document.traverse(nodes.section):
+			if re.match(r"\d.\d.\d", node.children[0].astext()):
+				node.attributes["classes"].append("changelog")
+
+				for child_node in node.traverse(nodes.section):
+					child_node.attributes["classes"].append("changelog")
+
+
 # class Changelog(SphinxDirective):
 #
 # 	def run(self):
@@ -273,5 +340,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	app.add_directive("versionadded", Change, override=True)
 	app.add_directive("versionchanged", Change, override=True)
 	app.add_directive("changelog", Changelog)
+
+	app.add_node(nodes.title, latex=(visit_title, LaTeXTranslator.depart_title))
+	app.add_config_value("changelog_sections_numbered", True, "env", [bool])
 
 	return {"parallel_read_safe": True}
