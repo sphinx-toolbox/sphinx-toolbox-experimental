@@ -82,16 +82,29 @@ class AutosummaryWidths(PatchedAutosummary):
 		html_widths = getattr(self.state.document, "autosummary_html_widths", ((1, 10), (9, 10)))
 		assert len(html_widths) == 2
 
-		table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
+		if "latex" in self.env.app.config.autosummary_widths_builders:
+			table_spec["spec"] = r'\Xx{%d}{%d}\Xx{%d}{%d}' % widths
+		else:
+			table_spec["spec"] = r'\Xx{1}{2}\X{1}{2}'
 
 		table = autosummary_table('')
-		real_table = nodes.table('', classes=["longtable", "autosummary"])
+
+		if "html" in self.env.app.config.autosummary_widths_builders:
+			real_table = nodes.table('', classes=["longtable", "autosummary"])
+		else:
+			real_table = nodes.table('', classes=["longtable"])
+
 		table.append(real_table)
 
 		group = nodes.tgroup('', cols=2)
 		real_table.append(group)
-		group.append(nodes.colspec('', colwidth=html_widths[0][0] * 100 / html_widths[0][1]))
-		group.append(nodes.colspec('', colwidth=html_widths[1][0] * 100 / html_widths[1][1]))
+
+		if "html" in self.env.app.config.autosummary_widths_builders:
+			group.append(nodes.colspec('', colwidth=html_widths[0][0] * 100 / html_widths[0][1]))
+			group.append(nodes.colspec('', colwidth=html_widths[1][0] * 100 / html_widths[1][1]))
+		else:
+			group.append(nodes.colspec('', colwidth=10))
+			group.append(nodes.colspec('', colwidth=90))
 
 		body = nodes.tbody('')
 		group.append(body)
@@ -120,7 +133,10 @@ class AutosummaryWidths(PatchedAutosummary):
 			col1 = f":obj:`{name} <{real_name}>`"
 
 			if "nosignatures" not in self.options:
-				col1 += f"\\ {rst.escape(sig).replace('(', '(​')}"
+				if "html" in self.env.app.config.autosummary_widths_builders:
+					col1 += f"\\ {rst.escape(sig).replace('(', '(​')}"
+				else:
+					col1 += f"\\ {rst.escape(sig)}"
 
 			append_row(col1, summary)
 
@@ -222,6 +238,7 @@ def setup(app: Sphinx):
 	:param app: The Sphinx application.
 	"""
 
+	app.add_config_value("autosummary_widths_builders", ["html", "latex"], rebuild="env", types=[list])
 	app.add_directive("autosummary", AutosummaryWidths, override=True)
 	app.add_directive("autosummary-widths", WidthsDirective)
 	app.connect("build-finished", latex.replace_unknown_unicode)
