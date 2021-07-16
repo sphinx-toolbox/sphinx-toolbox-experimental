@@ -180,6 +180,42 @@ class RemoveHTMLOnlySections(sphinx.transforms.SphinxTransform):
 			node.parent.replace_self(node.parent.children[node.parent.children.index(node):])
 
 
+class latex_section_indicator(nodes.paragraph):
+	"""
+	Docutils node to mark sections as being HTML only.
+	"""
+
+
+class LaTeXSectionDirective(SphinxDirective):
+	"""
+	Sphinx directive for marking a section as being LaTeX-only.
+	"""
+
+	def run(self) -> List[nodes.Node]:  # noqa: D102
+		return [latex_section_indicator()]
+
+
+class RemoveLaTeXOnlySections(sphinx.transforms.SphinxTransform):
+	"""
+	Sphinx transform to mark the node, its parent and siblings as being LaTeX-only.
+	"""
+
+	default_priority = 999
+
+	def apply(self, **kwargs) -> None:  # noqa: D102
+		env = cast(_BuildEnvironment, self.env)
+
+		if not hasattr(env, "latex_only_node_docnames"):
+			env.latex_only_node_docnames = set()
+
+		if self.app.builder.format.lower() == "latex":
+			return
+
+		for node in self.document.traverse(latex_section_indicator):
+			env.latex_only_node_docnames.add(env.docname)
+			node.parent.replace_self(node.parent.children[node.parent.children.index(node):])
+
+
 class phantom_section_indicator(nodes.paragraph):
 	"""
 	Docutils node to mark a section as being a phantom section.
@@ -217,6 +253,7 @@ def purge_outdated(app: Sphinx, env, added, changed, removed):
 	return [
 			*getattr(env, "html_only_node_docnames", []),
 			*getattr(env, "phantom_node_docnames", []),
+			*getattr(env, "latex_only_node_docnames", []),
 			]
 
 
@@ -228,9 +265,11 @@ def setup(app: Sphinx):
 	"""
 
 	app.add_directive("html-section", HTMLSectionDirective)
+	app.add_directive("latex-section", LaTeXSectionDirective)
 	app.add_directive("phantom-section", PhantomSectionDirective)
 
 	app.add_transform(RemoveHTMLOnlySections)
+	app.add_transform(RemoveLaTeXOnlySections)
 	app.add_transform(RemovePhantomSections)
 
 	app.add_node(nodes.title, override=True, latex=(visit_title, depart_title))
