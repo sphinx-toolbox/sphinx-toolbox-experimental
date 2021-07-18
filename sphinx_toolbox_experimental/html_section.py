@@ -67,6 +67,7 @@ logger = sphinx.util.logging.getLogger(__name__)
 
 class _BuildEnvironment(BuildEnvironment):
 	html_only_node_docnames: Set[str]
+	latex_only_node_docnames: Set[str]
 	phantom_node_docnames: Set[str]
 
 

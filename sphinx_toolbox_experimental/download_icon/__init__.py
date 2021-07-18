@@ -33,7 +33,7 @@ Sphinx extension to add an icon to the left of ``download`` roles.
 #
 
 # stdlib
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 # 3rd party
 from domdf_python_tools.compat import importlib_resources
@@ -43,7 +43,7 @@ from sphinx.application import Sphinx
 __all__ = ["copy_asset_files", "setup"]
 
 
-def copy_asset_files(app: Sphinx, exception: Exception = None):
+def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 	"""
 	Copy additional stylesheets into the HTML build directory.
 
@@ -87,10 +87,14 @@ def copy_asset_files(app: Sphinx, exception: Exception = None):
 	fonts_dir = PathPlus(app.outdir) / "_static" / "fonts"
 	fonts_dir.maybe_make()
 
-	for filename in []:
-		(fonts_dir / filename).write_binary(
+	for filename in [
+			"fontawesome-webfont.ttf",
+			"fontawesome-webfont.woff",
+			"fontawesome-webfont.woff2",
+			]:
+		(fonts_dir / filename).write_bytes(
 				importlib_resources.read_binary(
-						"sphinx_toolbox_experimental.fonts",
+						"sphinx_toolbox_experimental.download_icon",
 						filename,
 						)
 				)

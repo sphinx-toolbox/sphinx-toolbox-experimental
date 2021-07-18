@@ -37,7 +37,7 @@ import re
 from collections import defaultdict
 from functools import partial
 from operator import itemgetter
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple, cast
 
 # 3rd party
 from docutils import nodes
@@ -57,6 +57,7 @@ from sphinx_toolbox.utils import Purger  # nodep
 __all__ = ["Change", "Changelog", "builder_init", "setup"]
 
 changelog_node_purger = Purger("all_changelog_node_nodes")
+_ChangelogType = Dict[str, List[Tuple[str, str, List[str], str]]]
 
 
 class Change(VersionChange):
@@ -76,7 +77,7 @@ class Change(VersionChange):
 		if len(self.arguments) == 2:
 			body = [self.arguments[1]]
 		else:
-			body = self.content  # type: ignore
+			body = cast(List[str], self.content)
 
 		version = self.arguments[0]
 
@@ -130,6 +131,9 @@ class Changelog(SphinxDirective):
 	required_arguments = 1
 
 	def run(self):
+		"""
+		Process the content of the directive.
+		"""
 
 		ret = []
 
@@ -259,7 +263,7 @@ class ChangelogSectionTransform(SphinxTransform):
 			return
 
 		for node in self.document.traverse(nodes.section):
-			if re.match(r"\d.\d.\d", node.children[0].astext()):
+			if re.match(r"\d.\d.\d", node.children[0].astext()):  # type: ignore
 				node.attributes["classes"].append("changelog")
 
 				for child_node in node.traverse(nodes.section):
@@ -323,7 +327,7 @@ def builder_init(app: Sphinx) -> None:
 	:param app: The Sphinx application.
 	"""
 
-	changelog = defaultdict(partial(defaultdict, list))
+	changelog: _ChangelogType = defaultdict(partial(defaultdict, list))  # type: ignore
 	app.env.changelog = changelog  # type: ignore
 
 
