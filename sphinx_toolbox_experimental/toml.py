@@ -33,75 +33,10 @@ Sphinx extension which adds the ``toml`` role for referencing sections of the TO
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# stdlib
-import re
-from typing import List, Optional, Tuple
-
 # 3rd party
-from docutils import nodes
-from docutils.nodes import Node, system_message
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.locale import _  # nodep
-from sphinx.util.docutils import ReferenceRole  # nodep
+from sphinx.application import Sphinx
 
-__all__ = ["TOML", "setup"]
-
-
-class TOML(ReferenceRole):
-	"""
-	Sphinx role for referencing a section of the TOML specification.
-	"""
-
-	title: Optional[str]
-	target: Optional[str]
-	has_explicit_title: Optional[bool]
-
-	def run(self) -> Tuple[List[Node], List[system_message]]:
-		"""
-		Process the role.
-		"""
-
-		assert self.title is not None
-		assert self.target is not None
-		assert self.inliner is not None
-
-		if self.target.startswith('!'):
-			xref = False
-			self.target = self.target.lstrip('!')
-		else:
-			xref = True
-
-		node_list: List[nodes.Node] = []
-
-		if xref:
-			target_id = f"index-{self.env.new_serialno('index')}"
-			entries = [("single", _("TOML: %s") % self.target, target_id, '', None)]
-
-			index = addnodes.index(entries=entries)
-			target = nodes.target('', '', ids=[target_id])
-			node_list.extend((index, target))
-			self.inliner.document.note_explicit_target(target)
-
-		refuri = self.build_uri()
-		reference = nodes.reference('', '', internal=False, refuri=refuri, classes=["toml-xref"])
-		reference += nodes.inline(self.title, self.title)
-		node_list.append(reference)
-
-		return node_list, []
-
-	def build_uri(self) -> str:
-		"""
-		Constrict the target URI for the reference node.
-		"""
-
-		assert self.target is not None
-		assert self.inliner is not None
-
-		toml_spec_version = getattr(self.config, "toml_spec_version", "1.0.0").lstrip('v')
-
-		target = re.sub(r"[\W]+", '', self.target.lower().replace(' ', '-')).strip('-')
-		return f"https://toml.io/en/v{toml_spec_version}#{target}"
+__all__ = ["setup"]
 
 
 def setup(app: Sphinx):
@@ -111,9 +46,4 @@ def setup(app: Sphinx):
 	:param app: The Sphinx application.
 	"""
 
-	# 3rd party
-	from docutils.parsers.rst import roles
-
-	app.add_config_value("toml_spec_version", default="1.0.0", rebuild="env", types=[str])
-
-	roles.register_local_role("toml", TOML())
+	app.setup_extension("sphinx_packaging.toml")

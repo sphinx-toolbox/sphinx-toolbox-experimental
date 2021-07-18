@@ -45,14 +45,14 @@ from docutils.nodes import Node, fully_normalize_name
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
 from first import first
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.transforms import SphinxTransform  # nodep
-from sphinx.util.docutils import SphinxDirective  # nodep
-from sphinx.util.nodes import clean_astext  # nodep
-from sphinx.writers.latex import LaTeXTranslator  # nodep
-from sphinx_toolbox.changeset import VersionChange
-from sphinx_toolbox.utils import Purger
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.transforms import SphinxTransform
+from sphinx.util.docutils import SphinxDirective
+from sphinx.util.nodes import clean_astext
+from sphinx.writers.latex import LaTeXTranslator
+from sphinx_toolbox.changeset import VersionChange  # nodep
+from sphinx_toolbox.utils import Purger  # nodep
 
 __all__ = ["Change", "Changelog", "builder_init", "setup"]
 

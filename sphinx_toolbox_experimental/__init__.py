@@ -32,7 +32,7 @@ Experimental Sphinx Extensions.
 #
 
 # 3rd party
-from sphinx.application import Sphinx  # nodep
+from sphinx.application import Sphinx
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2021 Dominic Davis-Foster"

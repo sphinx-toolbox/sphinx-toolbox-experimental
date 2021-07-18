@@ -52,3 +52,6 @@ always = [
     "sphinx_toolbox_experimental.succinct_seealso",
     "sphinx_toolbox_experimental.peps",
 ]
+
+[tool.dep_checker]
+allowed_unused = [ "sphinx_packaging",]

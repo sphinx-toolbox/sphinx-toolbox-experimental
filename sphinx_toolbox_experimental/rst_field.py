@@ -37,13 +37,13 @@ import re
 from typing import Any, Dict, Optional, cast
 
 # 3rd party
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.domains import ObjType  # nodep
-from sphinx.domains.rst import ReSTDomain, ReSTMarkup  # nodep
-from sphinx.locale import _  # nodep
-from sphinx.roles import XRefRole  # nodep
-from sphinx.util.nodes import make_id  # nodep
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.domains import ObjType
+from sphinx.domains.rst import ReSTDomain, ReSTMarkup
+from sphinx.locale import _
+from sphinx.roles import XRefRole
+from sphinx.util.nodes import make_id
 
 __all__ = ["ReSTField", "setup"]
 

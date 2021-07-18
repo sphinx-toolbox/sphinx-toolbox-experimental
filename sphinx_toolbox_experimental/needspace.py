@@ -33,10 +33,10 @@ Sphinx extension which configures the LaTeX ``needspace`` package.
 
 # 3rd party
 from domdf_python_tools.stringlist import StringList
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.config import Config  # nodep
-from sphinx.writers.latex import LaTeXTranslator  # nodep
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.config import Config
+from sphinx.writers.latex import LaTeXTranslator
 
 __all__ = ["configure", "setup", "visit_desc"]
 

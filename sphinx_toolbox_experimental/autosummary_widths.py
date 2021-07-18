@@ -47,14 +47,14 @@ from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from domdf_python_tools import stringlist
 from domdf_python_tools.paths import PathPlus
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.config import Config  # nodep
-from sphinx.ext.autosummary import autosummary_table  # nodep
-from sphinx.util import rst  # nodep
-from sphinx.util.docutils import SphinxDirective, switch_source_input  # nodep
-from sphinx_toolbox import latex
-from sphinx_toolbox.more_autosummary import PatchedAutosummary
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.config import Config
+from sphinx.ext.autosummary import autosummary_table
+from sphinx.util import rst
+from sphinx.util.docutils import SphinxDirective, switch_source_input
+from sphinx_toolbox import latex  # nodep
+from sphinx_toolbox.more_autosummary import PatchedAutosummary  # nodep
 
 __all__ = ["AutosummaryWidths", "WidthsDirective", "configure", "setup"]
 

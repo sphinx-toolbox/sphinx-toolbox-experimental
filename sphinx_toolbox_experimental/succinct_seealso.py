@@ -32,10 +32,10 @@ Sphinx extension which customises :rst:dir:`seealso` directives to be on one lin
 #
 
 # 3rd party
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.locale import admonitionlabels  # nodep
-from sphinx.writers.latex import LaTeXTranslator  # nodep
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.locale import admonitionlabels
+from sphinx.writers.latex import LaTeXTranslator
 
 __all__ = ["depart_seealso", "setup", "visit_seealso"]
 

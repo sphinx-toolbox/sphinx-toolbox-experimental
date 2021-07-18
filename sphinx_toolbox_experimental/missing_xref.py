@@ -36,9 +36,9 @@ import re
 
 # 3rd party
 from docutils import nodes
-from sphinx.application import Sphinx  # nodep
-from sphinx.environment import BuildEnvironment  # nodep
-from sphinx.errors import NoUri  # nodep
+from sphinx.application import Sphinx
+from sphinx.environment import BuildEnvironment
+from sphinx.errors import NoUri
 
 __all__ = ["handle_missing_xref", "setup"]
 

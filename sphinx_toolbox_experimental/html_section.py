@@ -37,15 +37,15 @@ Sphinx extension to hide section headers with non-HTML builders.
 from typing import List, Set, cast
 
 # 3rd party
-import sphinx.transforms  # nodep
-import sphinx.util  # nodep
+import sphinx.transforms
+import sphinx.util
 from docutils import nodes
-from sphinx import addnodes  # nodep
-from sphinx.application import Sphinx  # nodep
-from sphinx.environment import BuildEnvironment  # nodep
-from sphinx.locale import __  # nodep
-from sphinx.util.docutils import SphinxDirective  # nodep
-from sphinx.writers.latex import LaTeXTranslator  # nodep
+from sphinx import addnodes
+from sphinx.application import Sphinx
+from sphinx.environment import BuildEnvironment
+from sphinx.locale import __
+from sphinx.util.docutils import SphinxDirective
+from sphinx.writers.latex import LaTeXTranslator
 
 # this package
 from sphinx_toolbox_experimental import __version__
