@@ -53,7 +53,7 @@ class ReSTField(ReSTMarkup):
 	Description of a reST directive field.
 	"""
 
-	def handle_signature(self, sig: str, signode: addnodes.desc_signature) -> str:
+	def handle_signature(self, sig: str, signode: addnodes.desc_signature) -> str:  # noqa: D102
 		name: str
 		argument: Optional[str]
 
@@ -70,7 +70,12 @@ class ReSTField(ReSTMarkup):
 			signode += addnodes.desc_annotation(text, text)
 		return name
 
-	def add_target_and_index(self, name: str, sig: str, signode: addnodes.desc_signature) -> None:
+	def add_target_and_index(  # noqa: D102
+			self,
+			name: str,
+			sig: str,
+			signode: addnodes.desc_signature,
+			) -> None:
 		domain = cast(ReSTDomain, self.env.get_domain("rst"))
 
 		prefix = self.objtype
