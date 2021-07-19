@@ -43,7 +43,7 @@ python-implementations = [ "CPython",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "BSD-3-Clause"
 package = "sphinx_toolbox_experimental"
-additional-files = [ "recursive-include sphinx_toolbox_experimental/fonts *",]
+additional-files = [ "recursive-include sphinx_toolbox_experimental/download_icon *",]
 
 [tool.importcheck]
 always = [

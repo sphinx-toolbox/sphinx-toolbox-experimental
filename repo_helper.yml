@@ -43,4 +43,4 @@ classifiers:
  - "Topic :: Utilities"
 
 manifest_additional:
- - "recursive-include sphinx_toolbox_experimental/fonts *"
+ - "recursive-include sphinx_toolbox_experimental/download_icon *"
