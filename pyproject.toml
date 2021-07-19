@@ -47,10 +47,15 @@ additional-files = [ "recursive-include sphinx_toolbox_experimental/download_ico
 
 [tool.importcheck]
 always = [
-    "sphinx_toolbox_experimental.html_section",
     "sphinx_toolbox_experimental.autosummary_widths",
-    "sphinx_toolbox_experimental.succinct_seealso",
+    "sphinx_toolbox_experimental.changelog",
+    "sphinx_toolbox_experimental.html_section",
+    "sphinx_toolbox_experimental.missing_xref",
+    "sphinx_toolbox_experimental.needspace",
     "sphinx_toolbox_experimental.peps",
+    "sphinx_toolbox_experimental.rst_field",
+    "sphinx_toolbox_experimental.succinct_seealso",
+    "sphinx_toolbox_experimental.toml",
 ]
 
 [tool.dep_checker]

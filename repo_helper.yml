@@ -44,3 +44,6 @@ classifiers:
 
 manifest_additional:
  - "recursive-include sphinx_toolbox_experimental/download_icon *"
+
+tox_unmanaged:
+ - testenv
