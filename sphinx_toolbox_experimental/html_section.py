@@ -192,7 +192,7 @@ class LaTeXSectionDirective(SphinxDirective):
 	Sphinx directive for marking a section as being LaTeX-only.
 	"""
 
-	def run(self) -> List[nodes.Node]:  # noqa: D102
+	def run(self) -> List[nodes.Node]:
 		return [latex_section_indicator()]
 
 
@@ -203,7 +203,7 @@ class RemoveLaTeXOnlySections(sphinx.transforms.SphinxTransform):
 
 	default_priority = 999
 
-	def apply(self, **kwargs) -> None:  # noqa: D102
+	def apply(self, **kwargs) -> None:
 		env = cast(_BuildEnvironment, self.env)
 
 		if not hasattr(env, "latex_only_node_docnames"):
