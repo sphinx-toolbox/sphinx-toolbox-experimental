@@ -50,7 +50,7 @@ def visit_desc(translator: LaTeXTranslator, node: addnodes.desc) -> None:
 	"""
 
 	needspace_amount = getattr(translator.config, "needspace_amount", r"5\baselineskip")
-	translator.body.append(fr"\needspace{{{needspace_amount}}}")
+	translator.body.append(f"\\needspace{{{needspace_amount}}}")
 
 	if "sphinxcontrib.toctree_plus" in translator.config.extensions:
 		# 3rd party
