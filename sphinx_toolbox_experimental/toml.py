@@ -33,6 +33,9 @@ Sphinx extension which adds the ``toml`` role for referencing sections of the TO
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
+import warnings
+
 # 3rd party
 from sphinx.application import Sphinx
 
@@ -45,5 +48,10 @@ def setup(app: Sphinx):
 
 	:param app: The Sphinx application.
 	"""
+
+	warnings.warn(
+		"sphinx_toolbox.experimental.toml is deprecated. Please use the sphinx_packaging.toml extension instead.",
+		DeprecationWarning
+	)
 
 	app.setup_extension("sphinx_packaging.toml")

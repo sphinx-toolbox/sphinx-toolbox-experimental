@@ -36,6 +36,9 @@ and the ``core-meta`` role for referencing sections in Python's core metadata`.
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
+import warnings
+
 # 3rd party
 from sphinx.application import Sphinx
 
@@ -48,5 +51,10 @@ def setup(app: Sphinx):
 
 	:param app: The Sphinx application.
 	"""
+
+	warnings.warn(
+			"sphinx_toolbox.experimental.peps is deprecated. Please use the sphinx_packaging.peps extension instead.",
+			DeprecationWarning
+			)
 
 	app.setup_extension("sphinx_packaging.peps")

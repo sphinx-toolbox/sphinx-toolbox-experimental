@@ -33,11 +33,11 @@ Sphinx extension to hide section headers with non-HTML builders.
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
+import warnings
+
 # 3rd party
 from sphinx.application import Sphinx
-
-# this package
-from sphinx_toolbox_experimental import __version__
 
 __all__ = ["setup"]
 
@@ -49,6 +49,9 @@ def setup(app: Sphinx):
 	:param app: The Sphinx application.
 	"""
 
-	app.setup_extension("html_section")
+	warnings.warn(
+			"sphinx_toolbox.experimental.html_section is deprecated. Please use the html_section extension from PyPI instead.",
+			DeprecationWarning
+			)
 
-	return {"version": __version__}
+	app.setup_extension("html_section")
