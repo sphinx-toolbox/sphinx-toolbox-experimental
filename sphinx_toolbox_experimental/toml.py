@@ -50,8 +50,8 @@ def setup(app: Sphinx):
 	"""
 
 	warnings.warn(
-		"sphinx_toolbox.experimental.toml is deprecated. Please use the sphinx_packaging.toml extension instead.",
-		DeprecationWarning
-	)
+			"sphinx_toolbox.experimental.toml is deprecated. Please use the sphinx_packaging.toml extension instead.",
+			DeprecationWarning
+			)
 
 	app.setup_extension("sphinx_packaging.toml")
