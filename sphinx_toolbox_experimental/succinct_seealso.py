@@ -32,40 +32,10 @@ Sphinx extension which customises :rst:dir:`seealso` directives to be on one lin
 #
 
 # 3rd party
-from sphinx import addnodes
 from sphinx.application import Sphinx
-from sphinx.locale import admonitionlabels
-from sphinx.writers.latex import LaTeXTranslator
 
-__all__ = ["depart_seealso", "setup", "visit_seealso"]
+__all__ = ["setup"]
 
-
-def visit_seealso(translator: LaTeXTranslator, node: addnodes.seealso) -> None:
-	"""
-	Visit an :class:`addnodes.seealso`` node.
-
-	:param translator:
-	:param node:
-	"""
-
-	# translator.body.append('\n\n\\begin{description}\\item[{%s:}] \\leavevmode' % admonitionlabels['seealso'])
-	# translator.body.append('\n\n\\sphinxstrong{%s:} ' % admonitionlabels["seealso"])
-	if len(node) > 1:
-		LaTeXTranslator.visit_seealso(translator, node)
-	else:
-		translator.body.append('\n\n\\sphinxstrong{%s:} ' % admonitionlabels["seealso"])
-
-
-def depart_seealso(translator: LaTeXTranslator, node: addnodes.seealso) -> None:
-	"""
-	Depart an :class:`addnodes.seealso`` node.
-
-	:param translator:
-	:param node:
-	"""
-
-	# translator.body.append("\\end{description}\n\n")
-	translator.body.append("\n\n")
 
 
 def setup(app: Sphinx):
@@ -75,4 +45,10 @@ def setup(app: Sphinx):
 	:param app: The Sphinx application.
 	"""
 
-	app.add_node(addnodes.seealso, latex=(visit_seealso, depart_seealso), override=True)
+	warnings.warn(
+			"sphinx_toolbox.experimental.succinct_seealso is deprecated. "
+			"Please use sphinx_toolbox.latex.succinct_seealso instead.",
+			DeprecationWarning
+			)
+
+	app.setup_extension("sphinx_toolbox.latex.succinct_seealso")
