@@ -37,7 +37,6 @@ from sphinx.application import Sphinx
 __all__ = ["setup"]
 
 
-
 def setup(app: Sphinx):
 	"""
 	Setup :mod:`sphinx_toolbox_experimental.succinct_seealso`.
