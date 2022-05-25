@@ -31,11 +31,13 @@ Sphinx extension which customises :rst:dir:`seealso` directives to be on one lin
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# stdlib
+import warnings
+
 # 3rd party
 from sphinx.application import Sphinx
 
 __all__ = ["setup"]
-
 
 
 def setup(app: Sphinx):
