@@ -32,33 +32,10 @@ Sphinx extension which configures the LaTeX ``needspace`` package.
 #
 
 # 3rd party
-from domdf_python_tools.stringlist import StringList
-from sphinx import addnodes
 from sphinx.application import Sphinx
 from sphinx.config import Config
-from sphinx.writers.latex import LaTeXTranslator
 
-__all__ = ["configure", "setup", "visit_desc"]
-
-
-def visit_desc(translator: LaTeXTranslator, node: addnodes.desc) -> None:
-	"""
-	Visit an :class:`addnodes.desc` node and add a custom table of contents label for the item, if required.
-
-	:param translator:
-	:param node:
-	"""
-
-	needspace_amount = getattr(translator.config, "needspace_amount", r"5\baselineskip")
-	translator.body.append(f"\\needspace{{{needspace_amount}}}")
-
-	if "sphinxcontrib.toctree_plus" in translator.config.extensions:
-		# 3rd party
-		from sphinxcontrib import toctree_plus  # type: ignore  # nodep
-
-		toctree_plus.visit_desc(translator, node)
-	else:
-		LaTeXTranslator.visit_desc(translator, node)
+__all__ = ["configure", "setup"]
 
 
 def configure(app: Sphinx, config: Config):
@@ -69,13 +46,8 @@ def configure(app: Sphinx, config: Config):
 	:param config:
 	"""
 
-	latex_elements = getattr(config, "latex_elements", {})
-
-	latex_extrapackages = StringList(latex_elements.get("extrapackages", ''))
-	latex_extrapackages.append(r"\usepackage{needspace}")
-	latex_elements["extrapackages"] = str(latex_extrapackages)
-
-	config.latex_elements = latex_elements  # type: ignore
+	needspace_amount = getattr(config, "needspace_amount", "5\baselineskip")
+	config.needspace_amount = needspace_amount  # type: ignore
 
 
 def setup(app: Sphinx):
@@ -85,8 +57,7 @@ def setup(app: Sphinx):
 	:param app: The Sphinx application.
 	"""
 
+	app.setup_extension("sphinx_toolbox.latex")
 	app.connect("config-inited", configure)
-	app.add_node(addnodes.desc, latex=(visit_desc, LaTeXTranslator.depart_desc), override=True)
-	app.add_config_value("needspace_amount", default=r"5\baselineskip", rebuild="latex", types=["str"])
 
 	return {"parallel_read_safe": True}
