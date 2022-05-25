@@ -56,7 +56,6 @@ def handle_missing_xref(
 	:param env: The Sphinx build environment.
 	:param node: The cross reference node which cannot be resolved.
 	:param contnode:
-	:return:
 	"""
 
 	if not isinstance(node, nodes.Element):

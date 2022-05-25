@@ -68,7 +68,7 @@ class AutosummaryWidths(PatchedAutosummary):
 		"""
 		Generate a proper list of table nodes for autosummary:: directive.
 
-		:param items: A a list produced by :meth:`~.get_items`.
+		:param items: A list produced by :meth:`~.get_items`.
 		"""
 
 		table_spec = addnodes.tabular_col_spec()
