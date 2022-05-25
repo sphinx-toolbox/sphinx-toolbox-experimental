@@ -180,8 +180,8 @@ class WidthsDirective(SphinxDirective):
 		else:
 			html_widths = [(1, 10), (9, 10)]
 
-		self.state.document.autosummary_widths = self.parse_widths(self.arguments)  # type: ignore
-		self.state.document.autosummary_html_widths = html_widths  # type: ignore
+		self.state.document.autosummary_widths = self.parse_widths(self.arguments)  # type: ignore[attr-defined]
+		self.state.document.autosummary_html_widths = html_widths  # type: ignore[attr-defined]
 
 		return []
 

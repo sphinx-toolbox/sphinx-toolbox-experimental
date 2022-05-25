@@ -79,7 +79,9 @@ class ReSTField(ReSTMarkup):
 		domain = cast(ReSTDomain, self.env.get_domain("rst"))
 
 		prefix = self.objtype
-		objname = re.match("([A-Za-z-_]*) <([A-Za-z-_]*)>", name).group(1)  # type: ignore
+		m = re.match("([A-Za-z-_]*) <([A-Za-z-_]*)>", name)
+		assert m is not None
+		objname = m.group(1)
 
 		node_id = make_id(self.env, self.state.document, prefix, name)
 		signode["ids"].append(node_id)

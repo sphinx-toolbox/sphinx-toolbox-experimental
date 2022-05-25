@@ -47,7 +47,7 @@ def configure(app: Sphinx, config: Config):
 	"""
 
 	needspace_amount = getattr(config, "needspace_amount", "5\baselineskip")
-	config.needspace_amount = needspace_amount  # type: ignore
+	config.needspace_amount = needspace_amount  # type: ignore[attr-defined]
 
 
 def setup(app: Sphinx):
