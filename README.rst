@@ -143,14 +143,14 @@ Superseded by `sphinx_toolbox.latex.succinct_seealso`_.
 sphinx_toolbox_experimental.peps
 -------------------------------------------------
 
-Superseded by `sphinx-packaging.peps <sphinx-packaging>`_.
+Superseded by `sphinx-packaging.peps`_.
 
-.. _sphinx-packaging: https://github.com/sphinx-toolbox/sphinx-packaging/
+.. _sphinx-packaging.peps: https://github.com/sphinx-toolbox/sphinx-packaging/
 
 
 sphinx_toolbox_experimental.toml
 -------------------------------------------------
 
-Superseded by `sphinx-packaging.toml <sphinx-packaging>`_.
+Superseded by `sphinx-packaging.toml`_.
 
-.. _sphinx-packaging: https://github.com/sphinx-toolbox/sphinx-packaging/
+.. _sphinx-packaging.toml: https://github.com/sphinx-toolbox/sphinx-packaging/
