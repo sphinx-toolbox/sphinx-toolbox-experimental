@@ -67,7 +67,7 @@ sphinx_toolbox_experimental
 	:target: https://github.com/sphinx-toolbox/sphinx-toolbox-experimental/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2022
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2023
 	:alt: Maintenance
 
 .. end shields
@@ -103,26 +103,6 @@ Sphinx extension which generates a changelog from ``versionadded`` and ``version
 The changelog can be added with the ``changelog`` directive. The directive takes a single argument, the version number to display the changelog for.
 
 
-sphinx_toolbox_experimental.html_section
------------------------------------------
-
-Sphinx extension to hide section headers with non-HTML builders.
-
-Usage
-^^^^^^^
-
-.. code-block:: rest
-
-	Contents
-	-----------
-
-	.. html-section::
-
-The section label ``Contents`` will only be shown with the HTML builder.
-However, the section content will still be visible.
-Consider using Sphinx's ``.. only:: html`` directive for that.
-
-
 sphinx_toolbox_experimental.missing_xref
 -------------------------------------------------
 
@@ -138,29 +118,39 @@ The default is to add ``\needspace{5\baselineskip}`` before each ``addnodes.desc
 The space can be adjusted with the ``needspace_amount`` option in ``conf.py``.
 
 
-sphinx_toolbox_experimental.peps
--------------------------------------------------
-
-Sphinx extension which modifies the ``pep`` role to use normal (i.e. not bold) text for custom titles.
-
-Also adds the ``pep621`` role for referencing sections within PEP 621,
-and the ``core-meta`` role for referencing sections in Python's core metadata`.
-
-
 sphinx_toolbox_experimental.rst_field
 -------------------------------------------------
 
 Sphinx extension to add a ``field`` directive to the ``rst`` domain for documenting a reST directive field..
 
 
+sphinx_toolbox_experimental.html_section
+-----------------------------------------
+
+Superseded by `html-section`_.
+
+.. _html-section: https://github.com/sphinx-toolbox/html-section/
+
+
 sphinx_toolbox_experimental.succinct_seealso
 -------------------------------------------------
 
-Sphinx extension which customises ``seealso`` directives to be on one line with the LaTeX builder.
+Superseded by `sphinx_toolbox.latex.succinct_seealso`_.
+
+.. _sphinx_toolbox.latex.succinct_seealso: https://sphinx-toolbox.readthedocs.io/en/latest/extensions/latex.html#module-sphinx_toolbox.latex.succinct_seealso
+
+
+sphinx_toolbox_experimental.peps
+-------------------------------------------------
+
+Superseded by `sphinx-packaging.peps`_.
+
+.. _sphinx-packaging: https://github.com/sphinx-toolbox/sphinx-packaging/
+
 
 sphinx_toolbox_experimental.toml
 -------------------------------------------------
 
-Sphinx extension which adds the ``toml`` role for referencing sections of the TOML specification.
+Superseded by `sphinx-packaging.toml`_.
 
-The TOML version can be set with the ``toml_spec_version`` option in ``conf.py``.
+.. _sphinx-packaging: https://github.com/sphinx-toolbox/sphinx-packaging/
