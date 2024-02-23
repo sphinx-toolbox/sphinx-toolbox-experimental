@@ -40,4 +40,4 @@ known_third_party = [
     "sphinx_packaging",
     "sphinx_toolbox",
 ]
-known_first_party = "sphinx_toolbox_experimental"
+known_first_party = [ "sphinx_toolbox_experimental",]
