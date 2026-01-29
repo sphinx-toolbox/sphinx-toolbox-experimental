@@ -50,7 +50,7 @@ def setup(app: Sphinx):
 	warnings.warn(
 			"sphinx_toolbox.experimental.succinct_seealso is deprecated. "
 			"Please use sphinx_toolbox.latex.succinct_seealso instead.",
-			DeprecationWarning
+			DeprecationWarning,
 			)
 
 	app.setup_extension("sphinx_toolbox.latex.succinct_seealso")

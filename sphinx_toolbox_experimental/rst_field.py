@@ -75,7 +75,7 @@ class ReSTField(ReSTMarkup):
 		name: str,
 		sig: str,
 		signode: addnodes.desc_signature,
-		) -> None:
+	) -> None:
 		domain = cast(ReSTDomain, self.env.get_domain("rst"))
 
 		prefix = self.objtype

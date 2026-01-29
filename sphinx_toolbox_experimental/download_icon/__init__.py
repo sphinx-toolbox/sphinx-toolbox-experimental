@@ -81,7 +81,7 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
     margin-left: .3em;
     text-decoration: inherit;
 }
-"""
+""",
 			)
 
 	fonts_dir = PathPlus(app.outdir) / "_static" / "fonts"
@@ -92,12 +92,11 @@ def copy_asset_files(app: Sphinx, exception: Optional[Exception] = None):
 			"fontawesome-webfont.woff",
 			"fontawesome-webfont.woff2",
 			]:
-		(fonts_dir / filename).write_bytes(
-				importlib_resources.read_binary(
-						"sphinx_toolbox_experimental.download_icon",
-						filename,
-						)
-				)
+		(fonts_dir / filename
+			).write_bytes(importlib_resources.read_binary(
+					"sphinx_toolbox_experimental.download_icon",
+					filename,
+					))
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:

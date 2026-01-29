@@ -51,7 +51,7 @@ def setup(app: Sphinx):
 
 	warnings.warn(
 			"sphinx_toolbox.experimental.html_section is deprecated. Please use the html_section extension from PyPI instead.",
-			DeprecationWarning
+			DeprecationWarning,
 			)
 
 	app.setup_extension("html_section")
