@@ -231,7 +231,7 @@ def visit_title(translator: LaTeXTranslator, node: nodes.title) -> None:
 			translator.body.append(r"\phantomsection\stepcounter{section}")
 			translator.body.append(
 					f"\\addcontentsline{{toc}}{{{sectionlevel}}}"
-					f"{{\\protect\\numberline{{\\the{sectionlevel}}}{{{node.astext()}}}}}"
+					f"{{\\protect\\numberline{{\\the{sectionlevel}}}{{{node.astext()}}}}}",
 					)
 			translator.body.append(f'\\{sectionlevel}{short}*{{')
 			translator.context.append('}\n' + translator.hypertarget_to(node.parent))
