@@ -7,7 +7,7 @@ email: 'dominic@davis-foster.co.uk'
 username: 'sphinx-toolbox'
 assignee: 'domdfcoding'
 version: '0.0.0'
-license: 'BSD'
+license: 'BSD-2-Clause'
 short_desc: 'Experimental Sphinx Extensions.'
 
 use_whey: true
